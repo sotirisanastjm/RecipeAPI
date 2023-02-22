@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RecipeAPI.Models.DTO;
 using RecipeAPI.Models;
+using RecipeAPI.Data;
 
 namespace RecipeAPI.Controllers
 {
@@ -11,11 +12,7 @@ namespace RecipeAPI.Controllers
         [HttpGet]
         public IEnumerable<RecipeDTO> GetRecipes()
         {
-            return new List<RecipeDTO>
-            {
-                new RecipeDTO {Id=1,Name="Spaghetti Alfredo"},
-                new RecipeDTO {Id=2,Name="Spaghetti Napolitan"}
-            };
+            return RecipeStore.recipeList;
         }
     }
 }
