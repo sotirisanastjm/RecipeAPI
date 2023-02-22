@@ -15,7 +15,7 @@ namespace RecipeAPI.Controllers
         {
             return Ok(RecipeStore.recipeList);
         }
-        [HttpGet("{id:int}")]
+        [HttpGet("{id:int}",Name ="GetRecipe")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -34,7 +34,7 @@ namespace RecipeAPI.Controllers
         }
 
         [HttpPost]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult<RecipeDTO> CreateRecipe([FromBody]RecipeDTO recipeDTO)
@@ -50,7 +50,7 @@ namespace RecipeAPI.Controllers
             }
             recipeDTO.Id=RecipeStore.recipeList.OrderByDescending(u=>u.Id).FirstOrDefault().Id+1;
             RecipeStore.recipeList.Add(recipeDTO);
-            return Ok(recipeDTO);
+            return CreatedAtRoute("GetRecipe", new {id=recipeDTO.Id},recipeDTO);
         }
     }
 }
