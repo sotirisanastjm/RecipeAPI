@@ -3,9 +3,11 @@ using RecipeAPI.Models;
 
 namespace RecipeAPI.Controllers
 {
+    [Route("api/RecipeAPI")]
     [ApiController]
     public class RecipeAPIController : ControllerBase
     {
+        [HttpGet]
         public IEnumerable<Recipe> GetRecipes()
         {
             return new List<Recipe>

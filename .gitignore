@@ -1,0 +1,14 @@
+
+bin/Debug/net6.0/appsettings.Development.json
+bin/Debug/net6.0/appsettings.json
+bin/Debug/net6.0/RecipeAPI.deps.json
+bin/Debug/net6.0/RecipeAPI.runtimeconfig.json
+obj/Debug/net6.0/_IsIncrementalBuild
+obj/Debug/net6.0/RecipeAPI.csproj.CoreCompileInputs.cache
+obj/Debug/net6.0/RecipeAPI.genruntimeconfig.cache
+obj/Debug/net6.0/RecipeAPI.MvcApplicationPartsAssemblyInfo.cs
+obj/Debug/net6.0/staticwebassets/msbuild.buildTransitive.RecipeAPI.props
+obj/Debug/net6.0/staticwebassets/msbuild.buildMultiTargeting.RecipeAPI.props
+obj/Debug/net6.0/staticwebassets/msbuild.build.RecipeAPI.props
+obj/Debug/net6.0/staticwebassets.build.json
+obj/Debug/net6.0/RecipeAPI.csproj.FileListAbsolute.txt
