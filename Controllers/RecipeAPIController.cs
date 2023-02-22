@@ -14,5 +14,10 @@ namespace RecipeAPI.Controllers
         {
             return RecipeStore.recipeList;
         }
+        [HttpGet("id")]
+        public RecipeDTO GetRecipe(int id)
+        {
+            return RecipeStore.recipeList.FirstOrDefault(u=>u.Id==id);
+        }
     }
 }
