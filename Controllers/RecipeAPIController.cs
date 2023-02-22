@@ -32,5 +32,25 @@ namespace RecipeAPI.Controllers
             }
             return Ok(recipe);
         }
+
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public ActionResult<RecipeDTO> CreateRecipe([FromBody]RecipeDTO recipeDTO)
+        {
+            if(recipeDTO == null)
+            {
+                return BadRequest(recipeDTO);
+
+            }
+            if(recipeDTO.Id> 0) 
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+            recipeDTO.Id=RecipeStore.recipeList.OrderByDescending(u=>u.Id).FirstOrDefault().Id+1;
+            RecipeStore.recipeList.Add(recipeDTO);
+            return Ok(recipeDTO);
+        }
     }
 }
