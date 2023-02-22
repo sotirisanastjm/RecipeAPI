@@ -10,14 +10,27 @@ namespace RecipeAPI.Controllers
     public class RecipeAPIController : ControllerBase
     {
         [HttpGet]
-        public IEnumerable<RecipeDTO> GetRecipes()
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public ActionResult<IEnumerable<RecipeDTO>> GetRecipes()
         {
-            return RecipeStore.recipeList;
+            return Ok(RecipeStore.recipeList);
         }
-        [HttpGet("id")]
-        public RecipeDTO GetRecipe(int id)
+        [HttpGet("{id:int}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult<RecipeDTO> GetRecipe(int id)
         {
-            return RecipeStore.recipeList.FirstOrDefault(u=>u.Id==id);
+            if(id== 0)
+            {
+                return BadRequest();
+            }
+            var recipe = RecipeStore.recipeList.FirstOrDefault(u=>u.Id== id);
+            if(recipe== null)
+            {
+                return NotFound();
+            }
+            return Ok(recipe);
         }
     }
 }
