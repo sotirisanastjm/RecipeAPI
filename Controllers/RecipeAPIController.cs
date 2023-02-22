@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using RecipeAPI.Models.DTO;
 using RecipeAPI.Models;
 
 namespace RecipeAPI.Controllers
@@ -8,12 +9,12 @@ namespace RecipeAPI.Controllers
     public class RecipeAPIController : ControllerBase
     {
         [HttpGet]
-        public IEnumerable<Recipe> GetRecipes()
+        public IEnumerable<RecipeDTO> GetRecipes()
         {
-            return new List<Recipe>
+            return new List<RecipeDTO>
             {
-                new Recipe {Id=1,Name="Spaghetti Alfredo"},
-                new Recipe {Id=2,Name="Spaghetti Napolitan"}
+                new RecipeDTO {Id=1,Name="Spaghetti Alfredo"},
+                new RecipeDTO {Id=2,Name="Spaghetti Napolitan"}
             };
         }
     }
