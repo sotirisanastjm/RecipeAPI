@@ -45,7 +45,7 @@ namespace RecipeAPI.Controllers
             //}
             if (RecipeStore.recipeList.FirstOrDefault(u => u.Name.ToLower() == recipeDTO.Name.ToLower())!=null)
             {
-                ModelState.AddModelError("Custom Error","Recipe already Exists!")
+                ModelState.AddModelError("Custom Error", "Recipe already Exists!");
                 return BadRequest(ModelState);
             }
             if(recipeDTO == null)
@@ -78,6 +78,22 @@ namespace RecipeAPI.Controllers
                 return NotFound();
             }
             RecipeStore.recipeList.Remove(recipe);
+            return NoContent();
+        }
+
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [HttpPut("{id:int",Name ="UpdateRecipe")]
+        public IActionResult UpdateRecipe(int id, [FromBody]RecipeDTO recipeDTO) 
+        {
+            if(recipeDTO==null || id!=recipeDTO.Id)
+            {
+                return BadRequest();
+            }
+            var recipe=RecipeStore.recipeList.FirstOrDefault(u=>u.Id== id);
+            recipe.Name = recipeDTO.Name;
+            recipe.Description = recipeDTO.Description;
+            recipe.Ingredients = recipeDTO.Ingredients;
             return NoContent();
         }
     }

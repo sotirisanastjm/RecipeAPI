@@ -8,5 +8,7 @@ namespace RecipeAPI.Models.DTO
         [Required]
         [MaxLength(40)]
         public string Name { get; set; }
+        public string Description { get; set; }
+        public string Ingredients { get; set; }
     }
 }
