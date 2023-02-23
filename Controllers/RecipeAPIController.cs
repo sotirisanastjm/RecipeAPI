@@ -2,6 +2,7 @@
 using RecipeAPI.Models.DTO;
 using RecipeAPI.Models;
 using RecipeAPI.Data;
+using Microsoft.AspNetCore.JsonPatch;
 
 namespace RecipeAPI.Controllers
 {
@@ -62,10 +63,11 @@ namespace RecipeAPI.Controllers
             return CreatedAtRoute("GetRecipe", new {id=recipeDTO.Id},recipeDTO);
         }
 
+        
+        [HttpDelete("{id:int}",Name ="DeleteRecipe")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [HttpDelete("{id:int}",Name ="DeleteRecipe")]
         public IActionResult DeleteRecipe(int id)
         {
             if (id == 0)
@@ -81,9 +83,10 @@ namespace RecipeAPI.Controllers
             return NoContent();
         }
 
+        
+        [HttpPut("{id:int",Name ="UpdateRecipe")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [HttpPut("{id:int",Name ="UpdateRecipe")]
         public IActionResult UpdateRecipe(int id, [FromBody]RecipeDTO recipeDTO) 
         {
             if(recipeDTO==null || id!=recipeDTO.Id)
@@ -97,6 +100,27 @@ namespace RecipeAPI.Controllers
             return NoContent();
         }
 
-        
+        [HttpPatch("{id:int", Name = "UpdatePartialRecipe")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public IActionResult UpdatePartialRecipe(int id, JsonPatchDocument<RecipeDTO> patchDTO)
+        {
+            if(patchDTO==null || id==0)
+            {
+                return BadRequest();
+            }
+            var recipe=RecipeStore.recipeList.FirstOrDefault(u=>u.Id== id);
+            if(recipe==null)
+            {
+                return BadRequest();
+            }
+            patchDTO.ApplyTo(recipe,ModelState);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            return NoContent();
+        }
+
     }
 }
