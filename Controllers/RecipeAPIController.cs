@@ -10,10 +10,19 @@ namespace RecipeAPI.Controllers
     [ApiController]
     public class RecipeAPIController : ControllerBase
     {
+        private readonly ILogger<RecipeAPIController> _logger;
+
+        public RecipeAPIController(ILogger<RecipeAPIController> logger)
+        {
+            _logger = logger;
+        }
+
+
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<IEnumerable<RecipeDTO>> GetRecipes()
         {
+            _logger.LogInformation("Getting all Recipes");
             return Ok(RecipeStore.recipeList);
         }
         [HttpGet("{id:int}",Name ="GetRecipe")]
@@ -24,11 +33,13 @@ namespace RecipeAPI.Controllers
         {
             if(id== 0)
             {
+                _logger.LogError("Get Recipe Error with Id" + id);
                 return BadRequest();
             }
             var recipe = RecipeStore.recipeList.FirstOrDefault(u=>u.Id== id);
             if(recipe== null)
             {
+
                 return NotFound();
             }
             return Ok(recipe);
